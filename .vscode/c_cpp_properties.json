@@ -1,0 +1,43 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/fernando/devel/include/**",
+        "/home/fernando/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/opt/intel/oneapi/tbb/2021.2.0/include/**",
+        "/opt/intel/oneapi/dal/2021.2.0/include/**",
+        "/home/fernando/catkin_ws/src/ORB_SLAM3/include/**",
+        "/home/fernando/catkin_ws/src/A-LOAM/include/**",
+        "/home/fernando/catkin_ws/src/control_my_robot/include/**",
+        "/home/fernando/catkin_ws/src/learning_launch/include/**",
+        "/home/fernando/catkin_ws/src/learning_tf/include/**",
+        "/home/fernando/catkin_ws/src/lidar_odometry_mapping/include/**",
+        "/home/fernando/catkin_ws/src/mytest/include/**",
+        "/home/fernando/catkin_ws/src/openni2_camera-ros1/openni2_camera/include/**",
+        "/home/fernando/catkin_ws/src/openslam_gmapping-melodic-devel/include/**",
+        "/home/fernando/catkin_ws/src/pointcloud_to_laserscan/include/**",
+        "/home/fernando/catkin_ws/src/robot_voice/include/**",
+        "/home/fernando/catkin_ws/src/geometry2/tf2/include/**",
+        "/home/fernando/catkin_ws/src/geometry2/tf2_bullet/include/**",
+        "/home/fernando/catkin_ws/src/geometry2/tf2_eigen/include/**",
+        "/home/fernando/catkin_ws/src/geometry2/tf2_geometry_msgs/include/**",
+        "/home/fernando/catkin_ws/src/geometry2/tf2_kdl/include/**",
+        "/home/fernando/catkin_ws/src/geometry2/tf2_msgs/include/**",
+        "/home/fernando/catkin_ws/src/geometry2/tf2_ros/include/**",
+        "/home/fernando/catkin_ws/src/geometry2/tf2_sensor_msgs/include/**",
+        "/home/fernando/catkin_ws/src/usb_cam-develop/include/**",
+        "/home/fernando/catkin_ws/src/vision_msgs/include/**",
+        "/home/fernando/catkin_ws/src/visual_odometry/include/**",
+        "/home/fernando/catkin_ws/src/vloam_tf/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
