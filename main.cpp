@@ -15,91 +15,103 @@
 #include <mutex>
 #define PI acos(-1)
 
-
-int main(/*int argc, char* argv[]*/)
-{  
-  // Create OpenGL window in single line
-  pangolin::CreateWindowAndBind("Main",640,480);
-  
-  // 3D Mouse handler requires depth testing to be enabled
-  glEnable(GL_DEPTH_TEST);
-
-  // Define Camera Render Object (for view / scene browsing)
-  pangolin::OpenGlRenderState s_cam(
-    pangolin::ProjectionMatrix(640,480,420,420,320,240,0.1,1000),
-    pangolin::ModelViewLookAt(-0,0.5,-3, 0,0,0, pangolin::AxisY)
-  );
-
-  // Choose a sensible left UI Panel width based on the width of 20
-  // charectors from the default font.
-  const int UI_WIDTH = 400;
-
-  // Add named OpenGL viewport to window and provide 3D Handler
-  pangolin::View& d_cam = pangolin::CreateDisplay()
-    .SetBounds(0.0, 1.0, pangolin::Attach::Pix(UI_WIDTH), 1.0, 640.0f/480.0f)
-    .SetHandler(new pangolin::Handler3D(s_cam));
-
-  // Add named Panel and bind to variables beginning 'ui'
-  // A Panel is just a View with a default layout and input handling
-  pangolin::CreatePanel("ui")
-      .SetBounds(0.0, 1.0, 0.0, pangolin::Attach::Pix(UI_WIDTH));
-
-  // Safe and efficient binding of named variables.
-  // Specialisations mean no conversions take place for exact types
-  // and conversions between scalar types are cheap.
-  pangolin::Var<bool> a_button("ui.A_Button",false,false);
-  pangolin::Var<double> a_double("ui.A_Double",3,0,5);
-  pangolin::Var<int> an_int("ui.An_Int",2,0,5);
-  pangolin::Var<double> a_double_log("ui.Log_scale",3,1,1E4, true);
-  pangolin::Var<bool> a_checkbox("ui.A_Checkbox",false,true);
-  pangolin::Var<int> an_int_no_input("ui.An_Int_No_Input",2);
-  pangolin::Var<std::string> a_string("ui.A_String", "Edit ME!");
-
-  // std::function objects can be used for Var's too. These work great with C++11 closures.
-  pangolin::Var<std::function<void(void)>> save_window("ui.Save_Window", [](){
-      pangolin::SaveWindowOnRender("window");
-  });
-
-  pangolin::Var<std::function<void(void)>> save_cube_view("ui.Save_Cube", [&d_cam](){
-      pangolin::SaveWindowOnRender("cube", d_cam.v);
-  });
-
-  // Demonstration of how we can register a keyboard hook to alter a Var
-  pangolin::RegisterKeyPressCallback(pangolin::PANGO_CTRL + 'b', [&](){
-      a_double = 3.5;
-  });
-
-  // Default hooks for exiting (Esc) and fullscreen (tab).
-  while( !pangolin::ShouldQuit() )
-  {
-    // Clear entire screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    
-
-    if( pangolin::Pushed(a_button) )
-      std::cout << "You Pushed a button!" << std::endl;
-
-    // Overloading of Var<T> operators allows us to treat them like
-    // their wrapped types, eg:
-    if( a_checkbox )
-      an_int = (int)a_double;
-
-    an_int_no_input = an_int;
-
-    if(d_cam.IsShown()) {
-        // Activate efficiently by object
-        d_cam.Activate(s_cam);
-
-        // Render some stuff
-        glColor3f(1.0,1.0,1.0);
-        pangolin::glDrawColouredCube();
-    }
-
-    // Swap frames and Process Events
-    pangolin::FinishFrame();
-  }
-
-  return 0;
+int main(){
+    cv::Mat a= (cv::Mat_<double>(3,1)<<2,3,1);
+    std::cout<<a<<std::endl;
+    std::cout<<a.at<double>(0,1)<<std::endl;
 }
+
+// int main(){
+//   double t = 1372687211.820015;
+//   unsigned long long ull=1000*(unsigned long long)(t*1e6);
+//   unsigned long long val = 1372687211820015000;
+//   std::cout<<ull<<"=="<<val<<std::endl;
+// }
+
+// int main(/*int argc, char* argv[]*/)
+// {  
+//   // Create OpenGL window in single line
+//   pangolin::CreateWindowAndBind("Main",640,480);
+  
+//   // 3D Mouse handler requires depth testing to be enabled
+//   glEnable(GL_DEPTH_TEST);
+
+//   // Define Camera Render Object (for view / scene browsing)
+//   pangolin::OpenGlRenderState s_cam(
+//     pangolin::ProjectionMatrix(640,480,420,420,320,240,0.1,1000),
+//     pangolin::ModelViewLookAt(-0,0.5,-3, 0,0,0, pangolin::AxisY)
+//   );
+
+//   // Choose a sensible left UI Panel width based on the width of 20
+//   // charectors from the default font.
+//   const int UI_WIDTH = 400;
+
+//   // Add named OpenGL viewport to window and provide 3D Handler
+//   pangolin::View& d_cam = pangolin::CreateDisplay()
+//     .SetBounds(0.0, 1.0, pangolin::Attach::Pix(UI_WIDTH), 1.0, 640.0f/480.0f)
+//     .SetHandler(new pangolin::Handler3D(s_cam));
+
+//   // Add named Panel and bind to variables beginning 'ui'
+//   // A Panel is just a View with a default layout and input handling
+//   pangolin::CreatePanel("ui")
+//       .SetBounds(0.0, 1.0, 0.0, pangolin::Attach::Pix(UI_WIDTH));
+
+//   // Safe and efficient binding of named variables.
+//   // Specialisations mean no conversions take place for exact types
+//   // and conversions between scalar types are cheap.
+//   pangolin::Var<bool> a_button("ui.A_Button",false,false);
+//   pangolin::Var<double> a_double("ui.A_Double",3,0,5);
+//   pangolin::Var<int> an_int("ui.An_Int",2,0,5);
+//   pangolin::Var<double> a_double_log("ui.Log_scale",3,1,1E4, true);
+//   pangolin::Var<bool> a_checkbox("ui.A_Checkbox",false,true);
+//   pangolin::Var<int> an_int_no_input("ui.An_Int_No_Input",2);
+//   pangolin::Var<std::string> a_string("ui.A_String", "Edit ME!");
+
+//   // std::function objects can be used for Var's too. These work great with C++11 closures.
+//   pangolin::Var<std::function<void(void)>> save_window("ui.Save_Window", [](){
+//       pangolin::SaveWindowOnRender("window");
+//   });
+
+//   pangolin::Var<std::function<void(void)>> save_cube_view("ui.Save_Cube", [&d_cam](){
+//       pangolin::SaveWindowOnRender("cube", d_cam.v);
+//   });
+
+//   // Demonstration of how we can register a keyboard hook to alter a Var
+//   pangolin::RegisterKeyPressCallback(pangolin::PANGO_CTRL + 'b', [&](){
+//       a_double = 3.5;
+//   });
+
+//   // Default hooks for exiting (Esc) and fullscreen (tab).
+//   while( !pangolin::ShouldQuit() )
+//   {
+//     // Clear entire screen
+//     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    
+
+//     if( pangolin::Pushed(a_button) )
+//       std::cout << "You Pushed a button!" << std::endl;
+
+//     // Overloading of Var<T> operators allows us to treat them like
+//     // their wrapped types, eg:
+//     if( a_checkbox )
+//       an_int = (int)a_double;
+
+//     an_int_no_input = an_int;
+
+//     if(d_cam.IsShown()) {
+//         // Activate efficiently by object
+//         d_cam.Activate(s_cam);
+
+//         // Render some stuff
+//         glColor3f(1.0,1.0,1.0);
+//         pangolin::glDrawColouredCube();
+//     }
+
+//     // Swap frames and Process Events
+//     pangolin::FinishFrame();
+//   }
+
+//   return 0;
+// }
 
 
 // int main( int /*argc*/, char** /*argv*/ )
@@ -287,7 +299,7 @@ int main(/*int argc, char* argv[]*/)
 // }
 
 // int main(){
-//     initSonarPoints();
+//     // initSonarPoints();
 
 //     pangolin::CreateWindowAndBind("Main",1024,768);
 //     glEnable(GL_DEPTH_TEST);
@@ -346,20 +358,20 @@ int main(/*int argc, char* argv[]*/)
 //         d_cam1.Activate(s_cam1);
 //         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 //         glColor3f(0.29f, 0.71f, 1.0f);
-//         //画位姿
-//         pangolin::glDrawColouredCube();
+//         // //画位姿
+//         // pangolin::glDrawColouredCube();
 
-//         d_cam2.Activate(s_cam2);
-//         //画声纳源数据
-//         glBegin(GL_LINES);
-//         for(point &p:sonarPoints){
-//             double r=p.hat(0),theta=p.hat(1);
-//             glColor3f(0.4f,0.4f,0.2f);
-//             glPointSize(4);
-//             glVertex2d(r*cos(theta),r*sin(theta));
-//             // std::cout<<r<<","<<theta<<","<<r*cos(theta)<<","<<r*sin(theta)<<std::endl;
-//         }
-//         glEnd();
+//         // d_cam2.Activate(s_cam2);
+//         // //画声纳源数据
+//         // glBegin(GL_LINES);
+//         // for(point &p:sonarPoints){
+//         //     double r=p.hat(0),theta=p.hat(1);
+//         //     glColor3f(0.4f,0.4f,0.2f);
+//         //     glPointSize(4);
+//         //     glVertex2d(r*cos(theta),r*sin(theta));
+//         //     // std::cout<<r<<","<<theta<<","<<r*cos(theta)<<","<<r*sin(theta)<<std::endl;
+//         // }
+//         // glEnd();
 
 
 //         // d_img2.Activate();
@@ -368,8 +380,8 @@ int main(/*int argc, char* argv[]*/)
 //         d_img3.Activate();
 //         glClearColor(1.0f,1.0f,1.0f,1.0f);
 //         //画图像源数据
-//         cameraImg = cv::imread("../1.jpg");
-//         pangolin::GlTexture cameraImgTexture(260/* d */, 260, GL_RGB, false, 0, GL_BGR, GL_UNSIGNED_BYTE);
+//         cv::Mat cameraImg = cv::imread("../1.jpg");
+//         pangolin::GlTexture cameraImgTexture(640/* d */, 960, GL_RGB, false, 0, GL_BGR, GL_UNSIGNED_BYTE);
 //         cameraImgTexture.Upload(cameraImg.data, GL_BGR, GL_UNSIGNED_BYTE);
 //         glColor3f(1.0f, 1.0f, 1.0f);
 //         cameraImgTexture.RenderToViewportFlipY();
@@ -736,7 +748,7 @@ int main(/*int argc, char* argv[]*/)
 //     std::cout<<"have essential matrix"<<std::endl;
 //     cv::recoverPose(essential_matrix, pts1, pts2, cameraMatrix,R,t);
 //     cv::Vec3f euler= rotationMatrixToEulerAngles(R);
-//     std::cout<<euler<<std::endl;
+//     std::cout<<"angle:"<<euler<<std::endl;
 //     return 1;
 // }
 
@@ -810,7 +822,7 @@ int main(/*int argc, char* argv[]*/)
 
 //         state = Re*state+te;
 //         Eigen::Vector4d c;
-//         c<<state[0],state[1],state[2],0.4;
+//         c<<state[0],state[1],state[2];
 //         std::cout<<c<<std::endl;
 //         poses.push_back(c);
 //     }
